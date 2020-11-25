@@ -84,6 +84,11 @@ func (d Download) Do() error  {
 		}()
 
 	}
+	waitGroup.Wait()
+	err = d.mergeFiles(section)
+	if err != nil {
+		return err
+	}
 	return nil
 }
 
@@ -118,5 +123,24 @@ func (d Download) downloadSection(i int, s [2]int) error  {
 	if err !=nil {
 		return err
 	}
+	return nil
+}
+
+func (d Download) mergeFiles(section [][2]int) error  {
+	f, err := os.OpenFile(d.TargetPath, os.O_CREATE|os.O_WRONLY|os.O_APPEND, os.ModePerm)
+	if err !=nil {
+		return err
+	}
+	defer f.Close()
+
+	for i := range section{
+		b, err := ioutil.ReadFile(fmt.Sprintf("section-%v.tmp", i))
+		if err !=nil {
+			return err
+		}
+		n, err := f.Write(b)
+		fmt.Printf("%v bytes merged\n", n)
+	}
+
 	return nil
 }
