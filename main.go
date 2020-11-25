@@ -20,8 +20,8 @@ type Download struct {
 func main()  {
 	startTime := time.Now()
 	d := Download{
-		Url: "https://www.dropbox.com/s/3uk5djzrr008lkc/1.%20Why%20choose%20Go%20%28%20golang%20%29%20for%20web%20development.mp4?dl=1",
-		TargetPath: "final.mp4",
+		Url: "http://172.16.50.7/SAM-FTP-2/English%20Movies/%282020%29/1%20Interrogation%20%282020%29%20720p%20WEBRip/1.Interrogation.2020.720p.WEBRip.800MB.x264-GalaxyRG.mkv",
+		TargetPath: "final.mkv",
 		TotalSection: 10,
 	}
 	err := d.Do()
@@ -145,9 +145,6 @@ func (d Download) mergeFiles(section [][2]int) error  {
 
 	return nil
 }
-
-
-
 
 func (d Download) Delete(i int) error  {
 	errs := os.Remove(fmt.Sprintf("section-%v.tmp", i))
