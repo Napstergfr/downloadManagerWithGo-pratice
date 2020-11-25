@@ -140,13 +140,13 @@ func (d Download) mergeFiles(section [][2]int) error  {
 		}
 		n, err := f.Write(b)
 		fmt.Printf("%v bytes merged\n", n)
-		d.Delete(i)
+		d.DeleteTmp(i)
 	}
 
 	return nil
 }
 
-func (d Download) Delete(i int) error  {
+func (d Download) DeleteTmp(i int) error  {
 	errs := os.Remove(fmt.Sprintf("section-%v.tmp", i))
 	if errs !=nil {
 		panic(errs)
